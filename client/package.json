@@ -1,0 +1,33 @@
+{
+  "name": "finalproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "node app.js"
+  },
+  "engines": {
+    "node": "10.14.1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@angular/cli": "^8.3.21",
+    "bootstrap": "^4.4.1",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "express-validator": "^6.3.1",
+    "fs": "0.0.1-security",
+    "mongoose": "^5.8.3",
+    "ng": "0.0.0",
+    "popper.js": "^1.16.0",
+    "require": "^2.4.20",
+    "startbootstrap-coming-soon": "^5.0.7",
+    "ejs": "^3.0.1"
+  },
+  "devDependencies": {
+    "ejs": "^3.0.1"
+  }
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      />
+    <title>Welcome to Storage Room</title>
+    <link href="../css/style.css" rel="stylesheet" id="style" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Sofia"
+      rel="stylesheet"
+    />
+    <!-- Load plotly.js into the DOM -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+
+  <body onload="fetchClusterPoints()">
+    <center><h1>Storage Room</h1></center>
+    <center>
+      <h2>Welcome to the website where you can better store your food !</h2>
+    </center>
+
+    <div class="jumbotron jumbotron-fluid" id="container">
+      <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
+
+      <div class="footer text-center">
+            <p>© 2020 Storage Room Website. Designed by Lina Abu Hijleh & Rasha Al Ogaili</a></p>
+        </div>
+    </div>
+  </body>
+
+  <script>
+    var map = {};
+
+    function fetchClusterPoints() {
+      console.log("Function Hit");
+      jQuery.ajax({
+        type: "GET",
+        url: "http://localhost:4000/foodTemp/clusterpoints",
+        dataType: "json",
+        contentType: "application/json",
+        success: function(res) {
+          console.log("result of cluster points", res);
+
+          console.log("length", res.points.length);
+
+          var traces = Array();
+          let min_fruit_temp_x = 1000;
+          let max_fruit_temp_x = 0;
+
+          let min_fruit_temp_y = 1000;
+          let max_fruit_temp_y = 0;
+
+          let last_point =res.cluster_points[res.cluster_points.length-1]
+
+          for (let i = 0; i < res.points.length; i++) {
+            xs = Array();
+            ys = Array();
+            texts = Array();
+            console.log(res.points[i].cluster);
+            for (let j = 0; j < res.points[i].cluster.length; j++) {
+              xs.push(res.points[i].cluster[j][0]);
+              ys.push(res.points[i].cluster[j][1]);
+            }
+            
+            marker_size = 12;
+            for(let x=0; x<xs.length; x++){
+              for(let y=0; y<res.cluster_points.length; y++){
+                if(xs[x] == res.cluster_points[y].fruit_temp && ys[x] ==  res.cluster_points[y].room_temp){
+                  texts.push(res.cluster_points[y].name);
+                  break;
+                }
+
+                if (xs[x] == last_point.fruit_temp && ys[x] == last_point.room_temp){
+                  marker_size = 20;
+                }
+              }
+            }
+
+            min_fruit_temp_x=Math.min(Math.min(...xs), min_fruit_temp_x);
+            max_fruit_temp_x=Math.max(Math.max(...xs), max_fruit_temp_x);
+
+            min_fruit_temp_y=Math.min(Math.min(...ys), min_fruit_temp_y);
+            max_fruit_temp_y=Math.max(Math.max(...ys), max_fruit_temp_y);
+
+            var trace = {
+              x: xs,
+              y: ys,
+              mode: "markers",
+              type: "scatter",
+              name: "Cluster" + i,
+              text: texts,
+              marker: { size: marker_size }
+            };
+            
+            traces.push(trace);
+          }
+          console.log(traces,'fefe')
+          var layout = {
+            xaxis: {
+              range: [min_fruit_temp_x-5, max_fruit_temp_x+5]
+            },
+            yaxis: {
+              range: [min_fruit_temp_y-5, max_fruit_temp_y+5]
+            },
+            title: "K-Means Clustering"
+          };
+
+          Plotly.newPlot("myDiv", traces, layout);
+        }
+      });
+    }
+  </script>
+</html>

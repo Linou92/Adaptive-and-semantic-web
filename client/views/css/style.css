@@ -1,0 +1,45 @@
+body {
+    background-color: #CCFFE5;
+    background-position:center;
+    background-size:cover;
+    font-family: 'Sofia', cursive!important;
+    -webkit-font-smoothing: antialiased;
+    
+  }
+  
+  input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+      color: black !important;
+      opacity: 0.3; /* Firefox */
+      font-size:14px!important;
+  }
+
+  input{
+    text-align: center;
+    background-color: transparent;
+  }
+  
+  h1,h2{
+      color:#FF6666!important;
+  }
+  
+  b{
+    color: #FF6666 !important;
+  }
+
+  textarea{
+    background-color: transparent;
+    border: 0px;
+  }
+
+  p {
+    display: inline;
+  }
+
+  #container{
+    margin: 5px;
+  }
+
+  .footer p{
+      font-size: 22px;
+      color: #FF6666!important;
+  }

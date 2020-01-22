@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Welcome to Storage Room </title>
+    <link href="../css/style.css" rel="stylesheet" id="style">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Sofia' rel='stylesheet'>
+
+
+</head>
+
+<body>
+    <center>
+        <h1>Storage Room</h1>
+    </center>
+    <center>
+        <h2>Welcome to the website where you can better store your food !</h2>
+    </center>
+
+    <div class="jumbotron jumbotron-fluid" id="container">
+
+        <b>Room Temperature : </b>
+        <input type="text" name="temp" id="val" placeholder="Please insert the temperature">
+        <b> °C </b>
+        <br><br><br><br>
+
+        <form id="myform">
+            <b>Food Type : </b> <select name="foodType" onChange="Choice(this.form); ChangeImg1();" id="foodType">
+                <option value="../../start.jpg">--Please select the food type--</option>
+                <option value="../../veggies.jpg" data-value="vegetables"> Vegetables </option>
+                <option value="../../fruits.jpg" data-value="fruits"> Fruits </option>
+                <option value="../../cans.jpg" data-value="canned_food"> Canned Food / Preserved Food </option>
+                <option value="../../meat.jpg" data-value="meat"> Meat </option>
+                <option value="../../dairy.jpg" data-value="dairy"> Dairy </option>
+            </select>
+            <img id="imageToSwap1" src="../../start.jpg" class="rounded-circle" style="float:right;" width="200"
+                height="150" />
+            <br><br><br><br>
+
+            <b>Specific Food : </b> <select name="food" onChange="ChangeImg2();" id="food">
+                <option>--Please select a specific food--</option>
+            </select>
+            <img id="imageToSwap2" src="../../start.jpg" class="rounded-circle" style="float:right;" width="200"
+                height="150" />
+        </form>
+        <br><br>
+        <button type="button" id="button" class="btn btn-info" onclick="input()">Ok</button>
+        <br><br>
+
+        <b>Suggested Temperature In Celsius : </b>
+        <p name="txt1" id="txt1"></p>
+        <b id="suggest2"> °C </b>
+        <br><br>
+        <b>Additional information : </b><br>
+        <b>Suggested Temperature In Fahrenheit : </b>
+        <p name="txt1" id="txt1"></p>
+        <b id="suggestInF"> °F </b>
+        <br><br>
+        <b>Best environment to store your food : </b>
+        <p name="txt2" id="txt2"></p>
+        <br><br>
+        <a class="btn btn-primary" href="/chart" target="_blank">View Chart</a>
+        <br>
+
+        <div class="footer text-center">
+            <p>© 2020 Storage Room Website. Designed by Lina Abu Hijleh & Rasha Al Ogaili</a></p>
+        </div>
+    </div>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+        </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+        </script>
+    <script>
+        $('#food').change(function () {
+
+
+        });
+    </script>
+    <script>
+        function Choice(form) {
+            i = form.foodType.selectedIndex;
+            if (i == 0) {
+                form.food.innerHTML = "<option></option>";
+                form.food.options[0].text = "--Please select a specific food--"
+                form.food.options[0].value = "../../start.jpg"
+                return;
+            }
+            form.food.selectedIndex = 0;
+            switch (i) {
+                case 1:
+                    var txt = new Array('Zucchini', 'Cucumber', 'Cauliflower', 'Cabbage', 'Lettuce');
+                    break;
+                case 2:
+                    var txt = new Array('Banana', 'Tomato', 'Apple', 'Ananas', 'Dates', 'Grapes', 'Orange', 'Melon');
+                    break;
+                case 3:
+                    var txt = new Array('Chickpeas', 'Lentils', 'Beans', 'Mushrooms', 'Corn', 'Olives',
+                        'OilsandSpices');
+                    break;
+                case 4:
+                    var txt = new Array('Beef', 'Freshmeat', 'Fish', 'Chicken');
+                    break;
+                case 5:
+                    var txt = new Array('Yoghurt', 'Cheese', 'Milk', 'CottageCheese', 'Eggs', 'Cream', 'WhippedCream');
+                    break;
+            }
+            form.food.innerHTML = "<option></option>";
+            form.food.options[0].text = "--Please select the food type--"
+            form.food.options[0].value = "../../start.jpg"
+            for (i = 0; i < txt.length; i++) {
+                form.food.appendChild(document.createElement("option"));
+                form.food.options[i + 1].text = txt[i];
+                form.food.options[i + 1].value = "../../" + txt[i] + ".jpg";
+                form.food.options[i + 1].setAttribute('data-value', txt[i]);
+            }
+        }
+    </script>
+    <script>
+        function ChangeImg1() {
+            var image = document.getElementById("imageToSwap1");
+            var change = document.getElementById("foodType");
+            image.src = change.value;
+        }
+    </script>
+    <script>
+        var maxtemp = 0;
+
+        function ChangeImg2() {
+            var image = document.getElementById("imageToSwap2");
+            var change = document.getElementById("food");
+            var room_temp = document.getElementById("val")
+            image.src = change.value;
+
+
+        }
+
+
+
+        function input() {
+            var room_temp = document.getElementById("val");
+
+            var app = $('#food option:selected').data("value");
+            var foodType = $('#foodType option:selected').data("value");
+
+            if (!room_temp.value) return alert("Please Enter The Room Temprature")
+            if (!app) return alert("Please select food")
+
+            var maxtemp = 0, mintemp = 0;
+            var env = '';
+            var inputVal = document.getElementById("val").value;
+
+            if (app == 'Banana' || app == 'Apple' || app == 'Grapes' || app == 'Orange' || app == 'Melon') {
+                $('#suggest2').html('<font color="black">between ' + 1 + ' °C and ' + 10 + ' °C </font>');
+                maxtemp = 10;
+                mintemp = 1;
+                env = 'Fridge';
+                if (0 > inputVal) {
+                    env = 'Room Temperature';
+                    maxtemp = 25;
+                    mintemp = 10;
+                }
+                var f1 = (1 * 1.8) + 32;
+                f1 = f1.toFixed(1);
+                var f2 = (18 * 1.8) + 32;
+                f2 = f2.toFixed(1)
+                $('#suggestInF').html('<font color="black" >between ' + f1 + " °F and " + f2 + ' °F </font>');
+            }
+            else if (app == 'Zucchini' || app == 'Cucumber' || app == 'Tomato' || app == 'Cauliflower' || app == 'Cabbage' || app == 'lettuce') {
+                $('#suggest2').html('<font color="black" >between ' + 4 + ' °C and ' + 8 + ' °C </font>');
+                maxtemp = 8;
+                mintemp = 4;
+                env = 'Fridge';
+                var f1 = (4 * 1.8) + 32;
+                f1 = f1.toFixed(1);
+                var f2 = (8 * 1.8) + 32;
+                f2 = f2.toFixed(1)
+                $('#suggestInF').html('<font color="black" >between ' + f1 + " °F and " + f2 + ' °F </font>');
+            }
+            else if (app == 'Avocado') {
+                $('#suggest2').html('<font color="black" >between ' + 5 + ' °C and ' + 15 + ' °C </font>');
+                maxtemp = 15;
+                mintemp = 5;
+                env = 'Fridge';
+                var f1 = (5 * 1.8) + 32;
+                f1 = f1.toFixed(1);
+                var f2 = (15 * 1.8) + 32;
+                f2 = f2.toFixed(1)
+                $('#suggestInF').html('<font color="black" >between ' + f1 + " °F and " + f2 + ' °F </font>');
+            }
+            else if (app == 'Dates') {
+                $('#suggest2').html('<font color="black" >between ' + 10 + ' °C and ' + 20 + ' °C </font>');
+                maxtemp = 20;
+                mintemp = 10;
+                env = 'Room Temperature';
+                var f1 = (10 * 1.8) + 32;
+                f1 = f1.toFixed(1);
+                var f2 = (20 * 1.8) + 32;
+                f2 = f2.toFixed(1)
+                $('#suggestInF').html('<font color="black" >between ' + f1 + " °F and " + f2 + ' °F </font>');
+            }
+            else if (app == 'Ananas') {
+                $('#suggest2').html('<font color="black" >between ' + 4 + ' °C and ' + 10 + ' °C </font>');
+                maxtemp = 10;
+                mintemp = 4;
+                env = 'Fridge';
+                if (0 > inputVal) {
+                    env = 'Room Temperature';
+                    maxtemp = 25;
+                    mintemp = 10;
+                }
+                var f1 = (4 * 1.8) + 32;
+                f1 = f1.toFixed(1);
+                var f2 = (10 * 1.8) + 32;
+                f2 = f2.toFixed(1)
+                $('#suggestInF').html('<font color="black" >between ' + f1 + " °F and " + f2 + ' °F </font>');
+            }
+            else if (app == 'Chickpeas' || app == 'Lentils' || app == 'Beans' || app == 'Corn' || app == 'OilsandSpices') {
+                $('#suggest2').html('<font color="black" >between ' + 15 + ' °C and ' + 25 + ' °C </font>');
+                maxtemp = 25;
+                mintemp = 15;
+                env = 'Room Temperature';
+                var f1 = (15 * 1.8) + 32;
+                f1 = f1.toFixed(1);
+                var f2 = (25 * 1.8) + 32;
+                f2 = f2.toFixed(1)
+                $('#suggestInF').html('<font color="black" >between ' + f1 + " °F and " + f2 + ' °F </font>');
+            }
+            else if (app == 'Olives' || app == 'Mushrooms') {
+                $('#suggest2').html('<font color="black" >between ' + 15 + ' °C and ' + 23 + ' °C </font>');
+                maxtemp = 23;
+                mintemp = 15;
+                env = 'Room Temperature';
+                var f1 = (15 * 1.8) + 32;
+                f1 = f1.toFixed(1);
+                var f2 = (23 * 1.8) + 32;
+                f2 = f2.toFixed(1)
+                $('#suggestInF').html('<font color="black" >between ' + f1 + " °F and " + f2 + ' °F </font>');
+            }
+            else if (app == 'Beef') {
+                maxtemp = -10;
+                mintemp = -20;
+                env = 'Freezer';
+                if (0 > inputVal) {
+                    env = 'Fridge';
+                    maxtemp = 4;
+                    mintemp = 1;
+                }
+                var f1 = (-20 * 1.8) + 32;
+                f1 = f1.toFixed(1);
+                var f2 = (-10 * 1.8) + 32;
+                f2 = f2.toFixed(1)
+                $('#suggest2').html('<font color="black" >between ' + mintemp + ' °C and ' + maxtemp + ' °C </font>');
+                $('#suggestInF').html('<font color="black" >between ' + f1 + " °F and " + f2 + ' °F </font>');
+            }
+            else if (app == 'Freshmeat' || app == 'Fish' || app == 'Chicken') {
+                maxtemp = -10;
+                mintemp = -18;
+                env = 'Freezer';
+                if (0 > inputVal) {
+                    console.log(inputVal);
+                    env = 'Fridge';
+                    maxtemp = 4;
+                    mintemp = 1;
+                    console.log(mintemp, maxtemp);
+                }
+                var f1 = (-18 * 1.8) + 32;
+                f1 = f1.toFixed(1);
+                var f2 = (-10 * 1.8) + 32;
+                f2 = f2.toFixed(1)
+                $('#suggest2').html('<font color="black" >between ' + mintemp + ' °C and ' + maxtemp + ' °C </font>');
+                $('#suggestInF').html('<font color="black" >between ' + f1 + " °F and " + f2 + ' °F </font>');
+            }
+
+            else if (app == 'Yoghurt ' || app == 'Cheese' || app == 'Milk' || app == 'CottageCheese' || app == 'Eggs' || app == 'Cream' || app == 'WhippedCream') {
+                $('#suggest2').html('<font color="black" >between ' + 1 + ' °C and ' + 4 + ' °C </font>');
+                maxtemp = 4;
+                mintemp = 1;
+                env = 'Fridge';
+                var f1 = (1 * 1.8) + 32;
+                f1 = f1.toFixed(1);
+                var f2 = (4 * 1.8) + 32;
+                f2 = f2.toFixed(1)
+                $('#suggestInF').html('<font color="black" >between ' + f1 + " °F and " + f2 + ' °F </font>');
+            }
+
+            $('#suggest2').html('<font color="black" >between ' + mintemp + ' °C and ' + maxtemp + ' °C </font>');
+
+
+            if (app && room_temp.value) {
+                var send = {
+                    fruit: app,
+                    room_temp: room_temp.value
+                }
+                console.log(send);
+                console.log("result 555" + send.address);
+                
+                jQuery.ajax({
+
+                    type: 'POST',
+                    url: 'https://storageroom.herokuapp.com/foodTemp',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(send),
+                    crossdomain: true,
+                    success: function (res) {
+                        console.log(res);
+                    }
+                });
+            }
+            document.getElementById("txt2").innerHTML = env;
+        }
+    </script>
+</body>
+
+</html>
